@@ -162,7 +162,6 @@
   tags:
     - rundeck
     - configuration
-    - ldap
 
 # vendor database setup
 - include: postgresql.yml
