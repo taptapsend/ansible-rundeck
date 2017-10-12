@@ -152,6 +152,18 @@
     - rundeck
     - configuration
 
+- name: Install | Ensure port number is configured
+  lineinfile:
+    dest: "{{ rundeck_conf_dir }}/profile"
+    regexp: '^export RDECK_HTTP_PORT=(.*)$'
+    line: 'export RDECK_HTTP_PORT=${RDECK_HTTP_PORT:-{{ rundeck_http_port }}}'
+  notify:
+    - restart rundeck
+  tags:
+    - rundeck
+    - configuration
+    - ldap
+
 # vendor database setup
 - include: postgresql.yml
   when: rundeck_database_type == 'postgresql'
