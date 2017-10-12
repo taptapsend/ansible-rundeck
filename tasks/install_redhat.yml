@@ -25,3 +25,5 @@
 - name: set rundeck_package_command for redhat
   set_fact:
     rundeck_package_command: yum info
+  tags:
+    - rundeck
