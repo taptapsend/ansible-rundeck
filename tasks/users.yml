@@ -6,6 +6,9 @@
     use_regex: True
   when: rundeck_users|selectattr('password_hash', 'undefined')|list|length > 0
   register: rundeck_jetty_jar
+  tags:
+    - rundeck
+    - users
 
 - name: Users | encode users password
   shell: "java -cp {{ rundeck_jetty_jar.files[0].path }} org.eclipse.jetty.util.security.Password {{ item.name }} {{ item.password }} 2>&1 | grep MD5"
@@ -14,6 +17,9 @@
   when: rundeck_users|selectattr('password_hash', 'undefined')|list|length > 0 and rundeck_jetty_jar['matched'] > 0
   with_items: "{{ rundeck_users|selectattr('password_hash', 'undefined')|list }}"
   no_log: true
+  tags:
+    - rundeck
+    - users
 
 - name: Users | update basic security to have users
   template:
