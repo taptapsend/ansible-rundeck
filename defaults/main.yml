@@ -48,3 +48,5 @@ rundeck_crowd_jaas_jars:
   - https://github.com/realloc/crowd-jaas/releases/download/v0.0.1/slf4j-simple-1.7.7.jar
 # OS, kept for backward compatibility, use rundeck_download_path instead.
 temp_dir: /tmp
+# Which apt package to install. Append "=X.Y.Z" to install version X.Y.Z rather than the latest.
+rundeck_apt_package: rundeck

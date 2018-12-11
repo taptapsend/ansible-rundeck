@@ -45,7 +45,7 @@
 
 - name: Debian | install from APT repository
   apt:
-    name: rundeck
+    name: "{{ rundeck_apt_package }}"
     state: present
   notify:
     - systemd daemon-reload
