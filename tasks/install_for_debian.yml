@@ -45,7 +45,7 @@
 
 - name: Rundeck | install from APT repository
   apt:
-    name: rundeck
+    name: "{{ rundeck_apt_package }}"
     state: present
     allow_unauthenticated: yes #FIXME: https://github.com/rundeck/rundeck/issues/93
   notify:
