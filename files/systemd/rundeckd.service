@@ -9,3 +9,6 @@ Group=rundeck
 ExecStart=/usr/bin/rundeck-start
 Restart=on-failure
 Type=simple
+
+[Install]
+WantedBy=multi-user.target
