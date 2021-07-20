@@ -17,27 +17,18 @@
   with_items:
     - httplib2
 
-- name: Debian | Add Bintray GPG key for rundeck repo
+- name: Debian | Add GPG key for rundeck repo
   apt_key:
-    id: 379CE192D401AB61
-    url: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+    id: 6F167DC5EC83332F
+    url: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
   tags:
     - rundeck
     - install
     - packages
 
-- name: Debian | Add Debian Build GPG key
-  apt_key:
-    id: 85E9DBC74FCB329EDEDADD2E90770E1BE2D1065B
-    url: http://rundeck.org/keys/BUILD-GPG-KEY-Rundeck.org.key
-  tags:
-    - rundeck
-    - install
-    - packages
-
-- name: Debian | Add Debian APT repository on Bintray
+- name: Debian | Add Debian APT repository for rundeck
   apt_repository:
-    repo: 'deb http://dl.bintray.com/rundeck/rundeck-deb /'
+    repo: 'deb https://packages.rundeck.com/pagerduty/rundeck/any/ any main'
   tags:
     - rundeck
     - install
