@@ -27,7 +27,7 @@
     dest: /etc/rundeck/realm.properties
     owner: rundeck
     group: rundeck
-  when: rundeck_users|length > 0 and rundeck_encoded_users|success
+  when: rundeck_users|length > 0 and rundeck_encoded_users|bool
   notify:
     - restart rundeck
   tags:
