@@ -1,0 +1,11 @@
+---
+# Debian based OS
+- name: Quick install
+  get_url:
+    url: https://raw.githubusercontent.com/rundeck/packaging/main/scripts/deb-setup.sh
+    des: /tmp/rundeck.sh
+    mode: 0644
+
+- name: Run script
+  shell:
+    cmd: cat /tmp/rundeck.sh | bash -s rundeck
