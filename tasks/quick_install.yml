@@ -2,13 +2,13 @@
 # Debian based OS
 - name: Quick install
   get_url:
-    url: https://raw.githubusercontent.com/rundeck/packaging/main/scripts/deb-setup.sh
+    url: https://packagecloud.io/install/repositories/pagerduty/rundeck/script.deb.sh
     dest: /tmp/rundeck.sh
     mode: 0644
 
 - name: Run script
   shell:
-    cmd: cat /tmp/rundeck.sh | bash -s rundeck
+    cmd: cat /tmp/rundeck.sh | bash -s
 
 - name: set rundeck_package_command for debian
   set_fact:
