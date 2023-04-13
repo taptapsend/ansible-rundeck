@@ -1,5 +1,20 @@
 ---
 # Debian based OS
+- name: Get updated cert (see https://github.com/rundeck/rundeck/issues/8250#issuecomment-1506689836)
+  get_url:
+    url: http://cacerts.digicert.com/DigiCertGlobalG2TLSRSASHA2562020CA1-1.crt.pem
+    dest: /tmp/cabundle.crt
+    mode: 0644
+
+- name: Copy cert
+  copy:
+    src: /tmp/cabundle.crt
+    dest: /usr/local/share/ca-certificates/cabundle.crt
+
+- name: Update certs
+  shell:
+    cmd: update-ca-certificates
+
 - name: Quick install
   get_url:
     url: https://packagecloud.io/install/repositories/pagerduty/rundeck/script.deb.sh
