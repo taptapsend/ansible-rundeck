@@ -8,6 +8,7 @@
 
 - name: Copy cert
   copy:
+    remote_src: true
     src: /tmp/cabundle.crt
     dest: /usr/local/share/ca-certificates/cabundle.crt
 
