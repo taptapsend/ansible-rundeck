@@ -18,7 +18,7 @@
 
 - name: Quick install
   get_url:
-    url: https://packagecloud.io/install/repositories/pagerduty/rundeck/script.deb.sh
+    url: curl https://raw.githubusercontent.com/rundeck/packaging/main/scripts/deb-setup.sh
     dest: /tmp/rundeck.sh
     mode: 0644
 
