@@ -18,7 +18,7 @@
 
 - name: Quick install
   get_url:
-    url: curl https://raw.githubusercontent.com/rundeck/packaging/main/scripts/deb-setup.sh
+    url: https://raw.githubusercontent.com/rundeck/packaging/main/scripts/deb-setup.sh
     dest: /tmp/rundeck.sh
     mode: 0644
 
