@@ -24,7 +24,7 @@
 
 - name: Run script
   shell:
-    cmd: cat /tmp/rundeck.sh | bash -s
+    cmd: cat /tmp/rundeck.sh | bash -s rundeck
 
 - name: set rundeck_package_command for debian
   set_fact:
