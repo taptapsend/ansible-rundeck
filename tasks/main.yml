@@ -1,6 +1,6 @@
 ---
 # install rundeck
-- include: install_debian.yml
+- include: quick_install.yml
   when: ansible_os_family == 'Debian'
 
 - include: install_redhat.yml
