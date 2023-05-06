@@ -59,7 +59,7 @@
   lineinfile:
     path: /etc/rundeck/framework.properties
     regexp: "^framework\\.server\\.hostname\\s*=\\s*"
-    line: "framework.server.hostname = {{ rundeck_domain }}"
+    line: "framework.server.hostname = localhost"
   notify:
     - restart rundeck
   tags:
@@ -70,7 +70,7 @@
   lineinfile:
     path: /etc/rundeck/framework.properties
     regexp: "^framework\\.server\\.name\\s*=\\s*"
-    line: "framework.server.name = {{ ansible_hostname }}"
+    line: "framework.server.name = localhost"
   notify:
     - restart rundeck
   tags:
