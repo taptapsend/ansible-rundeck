@@ -1,0 +1,29 @@
+---
+# Should ideally create user passwords dynamically like the following but failing:
+- name: Users | determine jetty jar
+  find:
+    paths: "/var/lib/rundeck/bootstrap/"
+    patterns: "^jetty-all-.*.jar$"
+    use_regex: true
+  register: rundeck_jetty_jar
+
+- name: Users | encode users password
+  shell: "java -cp {{ rundeck_jetty_jar.files[0].path }} org.eclipse.jetty.util.security.Password {{ item.name }} {{ item.password_hash }} 2>&1 | grep MD5"
+  become: true
+  register: rundeck_encoded_users
+  when: rundeck_users|selectattr('password_hash', 'defined')|list|length > 0 and rundeck_jetty_jar['matched'] > 0
+  with_items: "{{ rundeck_users|selectattr('password_hash', 'defined')|list }}"
+  no_log: false
+
+- name: Users | update basic security to have users
+  template:
+    src: realm.properties.j2
+    dest: /etc/rundeck/realm.properties
+    owner: rundeck
+    group: rundeck
+  when: rundeck_users|length > 0 or rundeck_encoded_users|length > 0
+  notify:
+    - restart rundeck
+  tags:
+    - rundeck
+    - users

@@ -1,11 +1,16 @@
 ---
 - name: systemd daemon-reload
-  become: yes
-  command: systemctl daemon-reload
+  become: true
+  systemd:
+    daemon_reload: true
   when: ansible_service_mgr == 'systemd'
 
 - name: start rundeck
-  service: name=rundeckd state=started
+  service:
+    name: rundeckd
+    state: started
 
 - name: restart rundeck
-  service: name=rundeckd state=restarted
+  service:
+    name: rundeckd
+    state: restarted

@@ -1,3 +1,4 @@
+{{ ansible_managed|comment }}
 #
 # This file defines users passwords and roles for a HashUserRealm
 #
@@ -26,7 +27,4 @@
 #@jetty.user.build.name@:@jetty.user.build.password@,user,build
 {% for user in rundeck_users|selectattr('password_hash', 'defined') %}
 {{ user.name }}:{{ user.password_hash }},user,{{ user.roles|join(',') }}
-{% endfor %}
-{% for user in rundeck_encoded_users.results|rejectattr('skipped', 'defined') %}
-{{ user.item.name }}:{{ user.stdout }},user,{{ user.item.roles|join(',') }}
 {% endfor %}

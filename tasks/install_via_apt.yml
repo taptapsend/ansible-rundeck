@@ -1,23 +1,6 @@
 ---
 # Debian based OS
-- name: Debian | Install supporting packages
-  apt:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  with_items:
-    - python-pip
-    - python-setuptools
-
-- name: Debian | Install supporting python packages
-  pip:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  with_items:
-    - httplib2
-
-- name: Debian | Add GPG key for rundeck repo
+- name:  Debian | Add GPG key for rundeck repo
   apt_key:
     id: 6F167DC5EC83332F
     url: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
@@ -50,8 +33,8 @@
   register: upstart_config
   stat:
     path: /etc/init/rundeckd.conf
-    get_md5: no
-    get_checksum: no
+    get_md5: false
+    get_checksum: false
   tags:
     - rundeck
     - install
@@ -70,5 +53,52 @@
 - name: set rundeck_package_command for debian
   set_fact:
     rundeck_package_command: dpkg -s
+
+- name: Debian | add systemd service helper
+  copy:
+    src: systemd/rundeck-start
+    dest: /usr/bin/rundeck-start
+    owner: root
+    group: root
+    mode: 0755
+  when: ansible_service_mgr == 'systemd'
   tags:
     - rundeck
+    - install
+    - packages
+
+- name: Debian | add systemd service unit
+  copy:
+    src: systemd/rundeckd.service
+    dest: /etc/systemd/system/rundeckd.service
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_service_mgr == 'systemd'
+  notify:
+    - systemd daemon-reload
+  tags:
+    - rundeck
+    - install
+    - packages
+
+- name: Debian | ensure service log directory has correct ownership
+  file:
+    path: /var/log/rundeck
+    owner: rundeck
+    state: directory
+  tags:
+    - rundeck
+    - install
+    - packages
+
+- name: Debian | See if there are more log files
+  find:
+    paths: /var/log/rundeck
+    file_type: file
+    patterns: "*.log"
+  register: rundeck_logfiles
+  tags:
+    - rundeck
+    - install
+    - packages
